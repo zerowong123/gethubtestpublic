@@ -46,13 +46,13 @@ function getLocation() {
                 fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=4b03bce954f532b687c0338bed594efb`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data); 
 
                     if (data && data.main) {
                         const temperature = data.main.temp;
-                        const description = data.weather && data.weather[0] ? data.weather[0].description : "No description available";
+                        const description = data.weather[0].description;
+      
                     
-                        apioutput.innerHTML=`<p>temperature:${temperature}</p>  <p>weather:${description}</p>`;
+                        apioutput.innerHTML=`<p>temperature:${Math.round(temperature-273.15)}°C</p>  <p>weather:${description}</p>`;
 
 
             }});

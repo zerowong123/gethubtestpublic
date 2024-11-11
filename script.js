@@ -3,17 +3,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
     button.addEventListener('click', getLocation);
 });
 
- let map;
+let map;
 
 function getLocation() {
     const output = document.getElementById('output');
     const loader = document.getElementById('loader');
     const mapDiv = document.getElementById('map');
+    const apioutput = document.getElementById('apioutput');
 
     // Show loader
     loader.style.display = "block";
     output.innerHTML = "";
-   
+    apioutput.innerHTML = "";
+
 
     // Check if Geolocation API is available
     if ("geolocation" in navigator) {
@@ -26,16 +28,12 @@ function getLocation() {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
 
-           
-
                 if (!map) {
-                 
                     map = L.map(mapDiv).setView([latitude, longitude], 13);
                     
                     // Load OpenStreetMap tiles
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
                 } else {
-
                     map.setView([latitude, longitude], 13);
                 }
 
@@ -44,10 +42,22 @@ function getLocation() {
                     .bindPopup("You are here!")
                     .openPopup();
                 output.innerHTML = `<p>Latitude: ${latitude}</p><p>Longitude: ${longitude}</p>`;
-               
-               
-            
-                },
+
+                fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=4b03bce954f532b687c0338bed594efb`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); 
+
+                    if (data && data.main) {
+                        const temperature = data.main.temp;
+                        const description = data.weather && data.weather[0] ? data.weather[0].description : "No description available";
+                    
+                        apioutput.innerHTML=`<p>temperature:${temperature}</p>  <p>weather:${description}</p>`;
+
+
+            }});
+
+            },
             (error) => {
                 // Hide loader and show error message
                 loader.style.display = "none";
@@ -67,7 +77,7 @@ function getLocation() {
                 }
             },
             {
-                enableHighAccuracy: true 
+                enableHighAccuracy: true
             }
         );
     } else {

@@ -24,6 +24,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 20px;
 }
 
 button:hover {
@@ -39,9 +40,9 @@ button:hover {
     padding-left: 20px;
 }
 
-/* Existing CSS code */
+
 .loader {
-    display: none; /* Hidden by default */
+    display: none; 
     border: 6px solid #f3f3f3;
     border-top: 6px solid #007bff;
     border-radius: 50%;
@@ -65,3 +66,7 @@ button:hover {
 p {
     padding-left: 20px;
   }
+
+#reset{
+    display:block;
+}

@@ -10,13 +10,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const mapDiv = document.getElementById('map');
     const output = document.getElementById('output');
     const apioutput = document.getElementById('apioutput');
+    const infosection = document.getElementById('info-section');
 
+    
     let map;
 
 
     if (storedtemperature && storeddescription && storedlatitude && storedlongitude) {
 
- 
+        infosection.style.display = 'none';
+
+
+        
 
 
         output.innerHTML = `<p>Latitude: ${storedlatitude}</p><p>Longitude: ${storedlongitude}</p>`;
@@ -32,7 +37,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 L.marker([storedlatitude, storedlongitude]).addTo(map)
                     .bindPopup("You are here!")
                     .openPopup();
-
+  
                 }
                 
 
@@ -44,13 +49,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 function handleButtonClick() {
 
+    const reset = document.getElementById('reset');
     const storedlatitude1 = localStorage.getItem('latitude');
     const storedlongitude1 = localStorage.getItem('longitude');
     const button = document.getElementById('getLocationButton');
+    const link = document.getElementById("info-section");
 
     if (!(storedlatitude1 && storedlongitude1) ){
         getLocation();
   }
+
+  link.style.display="none";
+  reset.textContent='this is reset key';
 }
 
 

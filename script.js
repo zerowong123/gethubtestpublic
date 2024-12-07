@@ -60,7 +60,7 @@ function handleButtonClick() {
   }
 
   link.style.display="none";
-  reset.textContent='this is reset key';
+
 }
 
 
